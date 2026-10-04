@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+# main への push ごとに、dist/（手元でビルドしてテストに合格したもの）を GitHub Pages へ公開します。
+# この制作環境では npm のレジストリへ接続できなかったため、ビルドは手元（node scripts/build.mjs）で行い、
+# 出来上がった dist/ をそのまま置いています（GitHub の上ではビルドしません）。
+# 初回だけ、リポジトリの Settings → Pages → Build and deployment → Source を「GitHub Actions」にしてください。
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the built files
+        run: |
+          test -f dist/index.html
+          test -f dist/assets/app.js
+          test -f dist/assets/app.css
+          test -f dist/fonts/NotoSansJP-subset.woff
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
