@@ -1,0 +1,31 @@
+{
+  "name": "takibi-hitoiki",
+  "private": true,
+  "version": "1.0.0",
+  "description": "焚き火と、ひと息。 — 薪を組んで、灯して、育てて、見送る焚き火のブラウザゲーム（公開版 1.0）",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "build:esbuild": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "scenarios": "tsx scripts/scenarios.ts"
+  },
+  "dependencies": {
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.x",
+    "@types/react-dom": "19.2.x",
+    "@types/three": "0.186.x",
+    "@vitejs/plugin-react": "6.1.1",
+    "esbuild": "0.27.7",
+    "tsx": "^4.20.0",
+    "typescript": "6.0.3",
+    "vite": "8.3.1"
+  }
+}
