@@ -1,0 +1,1190 @@
+/* 本番用の追加スタイル（ui.css のトークン・部品を前提に） */
+html,
+body,
+#root {
+  height: 100%;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.app.game {
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  background: #14202a;
+}
+.scene-host {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  touch-action: manipulation;
+}
+.scene-host.interactive {
+  touch-action: none;
+  cursor: crosshair;
+}
+.scene-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(6, 15, 23, 0.55), transparent 26%, transparent 62%, rgba(8, 15, 20, 0.55)),
+    radial-gradient(ellipse at 50% 60%, transparent 55%, rgba(4, 8, 12, 0.45) 100%);
+}
+.app .hud,
+.app .guide,
+.app .status-note,
+.app .dock,
+.app .subtitle,
+.app .toast,
+.app .return-watch {
+  z-index: 3;
+}
+.app .hud {
+  top: max(20px, env(safe-area-inset-top));
+}
+/* 題字は文字の大きさの設定で変えない（折り返さない） */
+.app .brand {
+  font-size: 19px;
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .app .brand {
+    font-size: 16px;
+  }
+}
+.app .guide {
+  pointer-events: none;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+}
+.app .guide h1 {
+  white-space: pre-line;
+}
+.app .guide p {
+  white-space: pre-line;
+}
+.guide .chip,
+.status-note .chip {
+  pointer-events: none;
+  margin-top: 14px;
+}
+.status-note {
+  pointer-events: none;
+}
+.status-note .hint,
+.guide .hint {
+  margin-top: 8px;
+  font-size: calc(13px * var(--fs, 1));
+  color: #e7ecee;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+  max-width: 290px;
+}
+.subtitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 250px;
+  margin: 0;
+  width: max-content;
+  max-width: min(92vw, 520px);
+  text-align: center;
+  font-size: calc(18px * var(--fs, 1));
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  padding: 10px 18px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(12, 23, 31, 0), rgba(12, 23, 31, 0.72) 18%, rgba(12, 23, 31, 0.72) 82%, rgba(12, 23, 31, 0));
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  animation: subtitleIn 0.6s ease;
+  pointer-events: none;
+}
+@keyframes subtitleIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+.app .dock {
+  max-height: calc(100svh - 120px);
+  overflow-y: auto;
+}
+.dock .row-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.dock .row-actions .btn {
+  flex: 1;
+  padding: 10px 12px;
+  min-width: 0;
+}
+.dock .row-actions .btn.grow2 {
+  flex: 2;
+  min-height: 56px;
+}
+.dock .row-actions .btn.icon-only {
+  flex: 0 0 56px;
+  padding: 0;
+}
+.dock .place-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 4px;
+}
+.dock .place-info .chip {
+  font-size: calc(12px * var(--fs, 1));
+}
+.dock .reason {
+  color: var(--warning);
+  font-size: calc(13px * var(--fs, 1));
+  margin: 6px 0 0;
+  min-height: 20px;
+}
+.dock .caption {
+  margin-top: 10px;
+  line-height: 1.6;
+}
+.wood-card .count {
+  font-size: calc(11px * var(--fs, 1));
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.wood-card[aria-disabled='true'] {
+  opacity: 0.45;
+}
+.wood-card {
+  cursor: pointer;
+  min-height: 72px;
+  touch-action: none;
+}
+.wood-card:focus-visible,
+.tool:focus-visible,
+.seg button:focus-visible {
+  outline: 3px solid #a9d8ee;
+  outline-offset: 3px;
+}
+.wood-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.wood-grid .wood-card {
+  padding: 10px 6px;
+}
+.wood-card small {
+  font-size: calc(11px * var(--fs, 1));
+  color: var(--muted);
+}
+.seg {
+  display: flex;
+  gap: 6px;
+  margin: 6px 0 12px;
+}
+.seg button {
+  flex: 1;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid #526068;
+  background: #25343b;
+  font-size: calc(13px * var(--fs, 1));
+}
+.seg button[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: #3d3a34;
+  color: #ffddbb;
+  font-weight: 600;
+}
+.seg-label {
+  font-size: calc(12px * var(--fs, 1));
+  color: var(--muted);
+}
+.dock .back-link {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: calc(12px * var(--fs, 1));
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+}
+.dock-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.dock-head h2 {
+  margin: 6px 0 10px;
+}
+.btn.small {
+  min-height: 48px;
+  font-size: calc(13px * var(--fs, 1));
+  padding: 8px 12px;
+}
+.btn .icon.flip {
+  transform: scaleX(-1);
+}
+.hud-actions .icon-btn.on {
+  border-color: rgba(238, 180, 130, 0.6);
+}
+.toast-stack {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(var(--dock-h, 220px) + 44px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 8;
+  width: min(92vw, 420px);
+  pointer-events: none;
+}
+.toast-stack .toast {
+  position: static;
+  transform: none;
+  width: auto;
+  max-width: 100%;
+  animation: toastIn 0.3s ease;
+}
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+.app.watching .hud,
+.app.watching .guide,
+.app.watching .status-note,
+.app.watching .dock,
+.app.watching .toast-stack {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s;
+}
+.app .return-watch {
+  bottom: max(28px, env(safe-area-inset-bottom));
+}
+.overlay-center {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #101a20;
+  text-align: center;
+}
+.overlay-center .panel {
+  max-width: 420px;
+}
+.loading-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin: 18px auto 0;
+  animation: glow 1.4s ease-in-out infinite;
+}
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+.debug-panel {
+  position: absolute;
+  top: 80px;
+  right: 12px;
+  z-index: 9;
+  font: 11px/1.5 ui-monospace, monospace;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: #cfe;
+  pointer-events: none;
+  white-space: pre;
+}
+.gauge {
+  height: 6px;
+  border-radius: 6px;
+  background: #2a3a43;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.gauge i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+.jrow {
+  padding: 10px 0;
+  border-bottom: 1px solid #45545b88;
+}
+.jrow .top {
+  display: flex;
+  justify-content: space-between;
+  font-size: calc(13px * var(--fs, 1));
+  gap: 12px;
+}
+.jrow .top strong {
+  font-weight: 600;
+}
+.state-chip {
+  font-size: calc(11px * var(--fs, 1));
+  padding: 2px 8px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+.state-chip.flaming {
+  color: #ffc58f;
+  border-color: #b36b33;
+}
+.state-chip.ember {
+  color: #ff9f7a;
+  border-color: #8a3a22;
+}
+.state-chip.warming {
+  color: var(--warning);
+}
+.state-chip.ash {
+  color: var(--muted);
+}
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tabs button {
+  flex: 1;
+  min-height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: transparent;
+}
+.tabs button[aria-selected='true'] {
+  background: #3d3a34;
+  border-color: var(--accent);
+  color: #ffddbb;
+}
+.timeline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: calc(13px * var(--fs, 1));
+}
+.timeline-list li {
+  display: flex;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid #45545b55;
+}
+.timeline-list time {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  min-width: 44px;
+}
+.layout-card {
+  width: 100%;
+  text-align: left;
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--night);
+  min-height: 56px;
+}
+.layout-card strong {
+  font-size: calc(15px * var(--fs, 1));
+}
+.layout-card span {
+  font-size: calc(12px * var(--fs, 1));
+  color: var(--muted);
+}
+.setting-row label,
+.setting-row .label {
+  display: block;
+  margin-bottom: 4px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.end-summary {
+  font-size: calc(13px * var(--fs, 1));
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+@media (max-width: 760px) {
+  .subtitle {
+    bottom: calc(var(--dock-h, 220px) + 36px);
+    font-size: calc(16px * var(--fs, 1));
+  }
+  .app .dock h2 {
+    font-size: calc(15px * var(--fs, 1));
+    margin: 2px 0 10px;
+  }
+  .app .dock .caption {
+    margin-top: 8px;
+    font-size: calc(11px * var(--fs, 1));
+  }
+  .wood-card {
+    min-height: 64px;
+    padding: 8px 4px;
+  }
+  .dock .wind-title,
+  .dock .wind-caption {
+    display: none;
+  }
+  .seg {
+    margin: 4px 0 8px;
+  }
+  .app .guide {
+    top: calc(max(20px, env(safe-area-inset-top)) + 84px + (var(--fs, 1) - 1) * 40px);
+  }
+  .app .status-note {
+    top: calc(max(20px, env(safe-area-inset-top)) + 80px + (var(--fs, 1) - 1) * 40px);
+  }
+  .app .dock {
+    max-height: 46svh;
+  }
+}
+@media (max-height: 700px) and (max-width: 760px) {
+  .app .guide {
+    top: calc(max(14px, env(safe-area-inset-top)) + 66px + (var(--fs, 1) - 1) * 40px);
+  }
+  .guide .hint,
+  .status-note .hint {
+    display: none;
+  }
+  .subtitle {
+    font-size: calc(15px * var(--fs, 1));
+  }
+  .dock .caption {
+    display: none;
+  }
+  .wood-card {
+    min-height: 60px;
+  }
+}
+@media (min-width: 761px) {
+  .subtitle {
+    left: 40px;
+    transform: none;
+    bottom: 48px;
+    text-align: left;
+    background: linear-gradient(90deg, rgba(12, 23, 31, 0.8), rgba(12, 23, 31, 0));
+    padding: 14px 24px 14px 18px;
+  }
+  @keyframes subtitleIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .toast-stack {
+    bottom: calc(48px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .subtitle,
+  .toast-stack .toast {
+    animation: none;
+  }
+}
+.app.reduce-motion .subtitle,
+.app.reduce-motion .toast-stack .toast {
+  animation: none;
+}
+
+/* ───────────── 思い出 */
+.status-note .status-action {
+  pointer-events: auto;
+  margin-top: 10px;
+  min-height: 48px;
+}
+.app .memory-page {
+  z-index: 4;
+  padding-top: 0;
+  background: #0c1922;
+}
+.memory-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: calc(max(20px, env(safe-area-inset-top)) + 84px);
+  margin: 0 -40px 8px;
+  background: linear-gradient(180deg, #0c1922 78%, rgba(12, 25, 34, 0));
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  .memory-topbar {
+    margin: 0 -24px 8px;
+  }
+}
+.app .hud {
+  z-index: 5;
+}
+.memory-card {
+  margin: 0;
+  justify-self: center;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1080 / 1350;
+  background: #eee7db;
+  box-shadow: 0 30px 60px #0005;
+  transform: rotate(-1.5deg);
+}
+.memory-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.card-wait {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: #6b5a4b;
+  font-size: calc(14px * var(--fs, 1));
+}
+.memory-text h1 {
+  white-space: pre-line;
+  outline: none;
+}
+.memory-text .last-line {
+  font-size: calc(15px * var(--fs, 1));
+  line-height: 1.8;
+  margin: 0 0 16px;
+}
+.name-field {
+  margin: 4px 0 8px;
+}
+.name-field label {
+  display: block;
+  font-size: calc(12px * var(--fs, 1));
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.name-field .row {
+  gap: 10px;
+}
+.name-field input {
+  flex: 1;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--night);
+  padding: 8px 12px;
+  font-size: calc(16px * var(--fs, 1));
+}
+.caption.over,
+.warn-text {
+  color: var(--warning);
+}
+.share-text {
+  margin-top: 14px;
+  font-size: calc(13px * var(--fs, 1));
+}
+.share-text summary {
+  cursor: pointer;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+}
+.share-text p {
+  user-select: all;
+  background: var(--night);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 6px 0 10px;
+  line-height: 1.7;
+}
+.axes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: calc(12px * var(--fs, 1));
+  color: var(--muted);
+  padding: 8px 0;
+}
+.entry .evolution {
+  grid-column: 1 / -1;
+  padding: 0 12px 12px;
+}
+.entry .evolution img {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+.entry .evolution .timeline {
+  margin: 12px 0;
+}
+.entry.locked small {
+  display: block;
+  padding: 0 12px;
+  font-size: calc(11px * var(--fs, 1));
+}
+.album-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: grid;
+  gap: 10px;
+}
+.album-list li {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 8px;
+  background: var(--night);
+}
+.album-list img,
+.album-list .thumb-empty {
+  width: 64px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #2a3a43;
+  flex-shrink: 0;
+}
+.album-text {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.album-text strong {
+  font-size: calc(14px * var(--fs, 1));
+}
+.album-actions {
+  display: flex;
+  gap: 6px;
+}
+.icon.filled {
+  fill: currentColor;
+}
+@media (max-width: 760px) {
+  .memory-card {
+    max-width: 300px;
+  }
+    }
+
+.dock .ember-actions .btn {
+  white-space: nowrap;
+  font-size: calc(12px * var(--fs, 1));
+  gap: 6px;
+  padding: 8px;
+}
+.dock .ember-actions .btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+}
+.choice {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+  padding: 10px 12px;
+  min-height: 56px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--night);
+  position: relative;
+}
+.choice strong {
+  font-size: calc(13px * var(--fs, 1));
+}
+.choice small {
+  font-size: calc(11px * var(--fs, 1));
+  color: var(--muted);
+}
+.choice[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: #3d3a34;
+}
+.choice[aria-pressed='true'] strong {
+  color: #ffddbb;
+}
+.choice .icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+}
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: grid;
+  gap: 2px;
+}
+.task-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid #45545b55;
+}
+.task-list .mark {
+  width: 22px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  padding-top: 2px;
+  color: var(--muted);
+}
+.task-list .mark .icon {
+  width: 16px;
+  height: 16px;
+}
+.task-list .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--muted);
+  margin-top: 4px;
+}
+.task-list li.done .mark {
+  color: var(--success);
+}
+.task-list li.waiting {
+  opacity: 0.55;
+}
+.task-text {
+  display: grid;
+  gap: 2px;
+}
+.task-text strong {
+  font-size: calc(13px * var(--fs, 1));
+  font-weight: 500;
+}
+.icon.inline {
+  width: 13px;
+  height: 13px;
+  vertical-align: -2px;
+  margin-right: 4px;
+}
+.wood-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+.dock .outfit-btn {
+  width: 100%;
+  justify-content: flex-start;
+  font-weight: 500;
+}
+.tabs {
+  flex-wrap: wrap;
+}
+.tabs button {
+  min-width: 60px;
+}
+
+/* 記録の書き出し・読み込み */
+.row.wrap {
+  flex-wrap: wrap;
+}
+.entry.locked.waiting {
+  min-height: 120px;
+  opacity: 0.75;
+}
+
+/* 動作チェック */
+.check-chip {
+  white-space: nowrap;
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid rgba(238, 180, 130, 0.5);
+  background: rgba(16, 26, 32, 0.84);
+  font-size: 11px;
+  color: #f3d9c0;
+}
+.link-btn {
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: calc(12px * var(--fs, 1));
+  padding: 6px 4px;
+  min-height: 32px;
+  text-decoration: underline;
+  position: relative;
+}
+/* 見た目は小さくても、押せる範囲は48px四方 */
+.link-btn::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 48px);
+  height: 48px;
+  transform: translate(-50%, -50%);
+}
+.check-report {
+  width: 100%;
+  min-height: 240px;
+  background: var(--night);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  font: 12px/1.6 ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  resize: vertical;
+}
+
+/* このゲームについて */
+.plain-list {
+  margin: 6px 0 0;
+  padding-left: 1.2em;
+}
+.credit-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.credit-list li {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--night);
+}
+.credit-list .tag {
+  justify-self: start;
+  font-size: calc(10px * var(--fs, 1));
+  padding: 1px 8px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+.license-text {
+  white-space: pre-wrap;
+  font-size: calc(10px * var(--fs, 1));
+  line-height: 1.5;
+  color: var(--muted);
+  max-height: 260px;
+  overflow: auto;
+}
+.warn-text {
+  color: var(--warning);
+}
+
+/* 動作チェック中：PCは右上のボタンの下、スマホは見出しの下に出し、左の案内を少し下げる */
+@media (min-width: 761px) {
+  .check-chip {
+    position: absolute;
+    right: 0;
+    top: 56px;
+    margin-top: 0;
+  }
+}
+@media (max-width: 760px) {
+  .app.checking .guide,
+  .app.checking .status-note {
+    transform: translateY(32px);
+  }
+}
+.check-chip .link-btn {
+  font-size: 11px;
+  min-height: 28px;
+}
+
+/*
+ * 横向きの短い画面（スマホの横向き・PCを200%に拡大したとき）：
+ * 道具箱を右側の縦の帯へ。景色・火・キャラは左の空いた所へ（FireScene が視点を左へずらす。幅は --side-w と同じ式）。
+ * 台詞は左下、知らせは上に1つだけ。思い出の画面はカードと文章を左右に並べる。
+ */
+@media (orientation: landscape) and (max-height: 520px) {
+  .app {
+    --side-w: min(300px, 40vw);
+    --free-w: calc(100vw - var(--side-w) - 34px);
+  }
+  .app .hud {
+    top: max(8px, env(safe-area-inset-top));
+    left: max(14px, env(safe-area-inset-left));
+    right: max(10px, env(safe-area-inset-right));
+    padding: 0;
+  }
+  .app .brand {
+    font-size: 15px;
+  }
+  .app .dock {
+    left: auto;
+    right: max(10px, env(safe-area-inset-right));
+    top: auto;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    width: var(--side-w);
+    max-height: calc(100svh - max(8px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom)) - 58px);
+    overflow-y: auto;
+    padding: 12px 14px;
+    border-radius: 18px;
+  }
+  .app .dock .hint,
+  .app .dock .caption,
+  .dock .wind-title,
+  .dock .wind-caption {
+    display: none;
+  }
+  /* 送風：うちわ／火吹き筒の切り替えが入るので、見出しの小さな文字は隠して（読み上げの名前には残る）一画面に収める */
+  .app .wind-dock .seg-label {
+    display: none;
+  }
+  .app .wind-dock .seg,
+  .app .wind-dock .tool-switch,
+  .app .wind-dock .aim-row {
+    margin: 4px 0 6px;
+  }
+  .app .dock h2 {
+    font-size: calc(14px * var(--fs, 1));
+    margin: 2px 0 8px;
+  }
+  .app .tool {
+    min-height: 56px;
+    padding: 8px 4px;
+    gap: 4px;
+  }
+  .app .watch {
+    height: 40px;
+    margin-top: 4px;
+  }
+  .wood-card {
+    min-height: 56px;
+    padding: 6px 4px;
+  }
+  /* 置く位置・回転のボタンは、狭い帯でも4つ並ぶように縮める（押せる大きさは48px以上） */
+  .app .dock .row-actions .btn.icon-only {
+    flex: 1 1 0;
+    min-width: 48px;
+    width: auto;
+    padding: 0;
+  }
+  .app .guide {
+    top: calc(max(8px, env(safe-area-inset-top)) + 56px + (var(--fs, 1) - 1) * 30px);
+    left: max(16px, env(safe-area-inset-left));
+    width: min(300px, var(--free-w));
+  }
+  .app .guide h1 {
+    font-size: calc(20px * var(--fs-lg, 1));
+    line-height: 1.45;
+    margin: 4px 0;
+  }
+  .app .guide p {
+    font-size: calc(12px * var(--fs, 1));
+    line-height: 1.6;
+    width: auto;
+  }
+  .app .step-line {
+    margin-top: 8px;
+  }
+  .guide .hint,
+  .status-note .hint {
+    display: none;
+  }
+  .app .status-note {
+    top: calc(max(8px, env(safe-area-inset-top)) + 62px + (var(--fs, 1) - 1) * 30px);
+    left: max(16px, env(safe-area-inset-left));
+    max-width: min(260px, var(--free-w));
+  }
+  .status-note .status-action {
+    margin-top: 6px;
+    min-height: 48px;
+  }
+        /* 知らせは右の帯（道具箱の上）に、新しい2つだけ（景色とキャラの顔を隠さない） */
+  .toast-stack {
+    left: auto;
+    right: max(10px, env(safe-area-inset-right));
+    transform: none;
+    top: auto;
+    bottom: calc(var(--dock-h, 120px) + max(10px, env(safe-area-inset-bottom)) + 10px);
+    width: var(--side-w);
+  }
+  .toast-stack .toast:nth-last-child(n + 3) {
+    display: none;
+  }
+  .app .toast {
+    font-size: calc(12px * var(--fs, 1));
+    padding: 8px 14px;
+  }
+  .subtitle {
+    left: max(14px, env(safe-area-inset-left));
+    transform: none;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    max-width: var(--free-w);
+    font-size: calc(14px * var(--fs, 1));
+    text-align: left;
+  }
+  .app .return-watch {
+    left: calc((100vw - var(--side-w)) / 2);
+    bottom: max(10px, env(safe-area-inset-bottom));
+  }
+  /* 思い出：カードと文章を左右に */
+  .app .memory-page {
+    padding: 0 20px 20px;
+  }
+  .memory-topbar {
+    height: calc(max(8px, env(safe-area-inset-top)) + 56px);
+    margin: 0 -20px 4px;
+  }
+  .app .memory-layout {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  .memory-card {
+    width: auto;
+    height: calc(100svh - 90px);
+    max-width: none;
+  }
+  .memory-text h1 {
+    font-size: calc(22px * var(--fs-lg, 1));
+    margin: 6px 0;
+  }
+}
+
+/* ───── 公開前の見直し（UI/UX仕様：押せる範囲48px・補助の文字12px以上・見守り中も知らせは見える・狭い画面でも次の一手を出す） */
+.toggle {
+  position: relative;
+}
+.toggle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 56px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+}
+input[type='range'] {
+  height: 48px;
+}
+@media (max-width: 760px) {
+  .app .dock .caption {
+    font-size: calc(12px * var(--fs, 1));
+  }
+  }
+/* 見守り中も、熾火の前の案内などの知らせは小さく見せる（UIは薄く、消さない） */
+.app.watching .toast-stack {
+  opacity: 0.85;
+}
+/* 狭い画面：次の一手（状態の案内）と、火を灯せない理由は隠さない。2行まで */
+@media (max-height: 700px) and (max-width: 760px), (orientation: landscape) and (max-height: 520px) {
+  .app .status-note .hint {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: calc(12px * var(--fs, 1));
+    margin-top: 6px;
+    max-width: min(260px, 70vw);
+  }
+  .app .dock #ignite-reason {
+    display: block;
+    font-size: calc(12px * var(--fs, 1));
+  }
+}
+/* 薪支度：中薪の樹種（太さとは別に選ぶ）。横に流して選ぶ */
+.species-pick {
+  margin-top: 10px;
+}
+.species-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 0 2px;
+  scrollbar-width: thin;
+}
+.chip-btn {
+  flex: 0 0 auto;
+  min-height: 48px;
+  min-width: 56px;
+  padding: 0 12px;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  font-size: calc(13px * var(--fs, 1));
+}
+.chip-btn.on {
+  border-color: var(--accent);
+  background: #3d3a34;
+  color: #ffddbb;
+  font-weight: 600;
+}
+.dock .caption.tight {
+  margin: 4px 0 8px;
+}
+.dock .tool-switch {
+  margin: 4px 0 10px;
+}
+.dock .aim-row {
+  align-items: center;
+  margin: 4px 0 8px;
+}
+.dock .aim-row .aim-label {
+  flex: 1;
+  text-align: center;
+  font-size: calc(14px * var(--fs, 1));
+  color: #ffddbb;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.btn[aria-disabled='true'] {
+  opacity: 0.55;
+}
