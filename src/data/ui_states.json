@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "reviewOnlySceneSelector": true,
+  "states": [
+    {
+      "id": "prepare",
+      "next": [
+        "stack"
+      ]
+    },
+    {
+      "id": "stack",
+      "next": [
+        "ignite",
+        "prepare"
+      ]
+    },
+    {
+      "id": "ignite",
+      "next": [
+        "growth",
+        "stack"
+      ]
+    },
+    {
+      "id": "growth",
+      "next": [
+        "mature",
+        "uncle",
+        "ember"
+      ]
+    },
+    {
+      "id": "mature",
+      "next": [
+        "uncle",
+        "ember"
+      ]
+    },
+    {
+      "id": "uncle",
+      "next": [
+        "ember"
+      ]
+    },
+    {
+      "id": "ember",
+      "next": [
+        "memory"
+      ]
+    },
+    {
+      "id": "memory",
+      "next": [
+        "prepare"
+      ]
+    }
+  ],
+  "overlays": [
+    "journal",
+    "evolution",
+    "settings",
+    "pause",
+    "end_confirmation",
+    "wood_picker",
+    "reposition",
+    "wind",
+    "conversation"
+  ],
+  "pauseReasons": [
+    "hidden",
+    "settings",
+    "journal",
+    "user",
+    "loading"
+  ]
+}
