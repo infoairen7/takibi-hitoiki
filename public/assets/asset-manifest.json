@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "stage": "release-1.0",
+  "note": "公開版（1.0）で使っている素材。runtimeReady=true は実行に使えるもの（仮素材を含む）。2026-10-04 にキャラクターを企画から外したため、キャラクターの画像・3Dモデル・台詞の音は使わない（一覧から外した）。仮素材（status=provisional）は、差し替えなくても公開できるが、本番素材へ差し替える候補。",
+  "assets": [
+    {
+      "id": "backdrop_forest_dusk",
+      "file": "assets/backdrop_forest_dusk_provisional.jpg",
+      "kind": "image",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "03_art/fire/F01_prepare.png の上部を切り出し（承認済み画像）",
+      "replaceWith": "遠景の本番素材（湖畔の森・夕暮れ）。loadBackdrop(url) で差し替え",
+      "rights": "企画パッケージ同梱の承認済み画像",
+      "usedBy": "場所「森の湖畔」の遠景"
+    },
+    {
+      "id": "font_noto_sans_jp_subset",
+      "file": "fonts/NotoSansJP-subset.woff",
+      "kind": "font",
+      "status": "final",
+      "runtimeReady": true,
+      "source": "06_fonts（同梱）",
+      "rights": "SIL OFL 1.1（fonts/OFL.txt）"
+    },
+    {
+      "id": "icons_28",
+      "file": "src/ui/iconSprite.ts",
+      "kind": "svg",
+      "status": "final",
+      "runtimeReady": true,
+      "source": "02_ui/index.html の内部symbol（同梱）＋補助アイコン3種を追加",
+      "rights": "企画パッケージ同梱"
+    },
+    {
+      "id": "ui_css_tokens",
+      "file": "src/styles/ui.css",
+      "kind": "css",
+      "status": "final",
+      "runtimeReady": true,
+      "source": "02_ui/ui.css・tokens.json（同梱）"
+    },
+    {
+      "id": "wood_logs",
+      "file": "src/render/logGeometry.ts",
+      "kind": "procedural-mesh",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "手続き生成（半割り・四つ割り・板状・細薪）",
+      "replaceWith": "GLB（中薪・細薪・太薪の各数本、属性 aSeg/aSurf を持つか、同等のUV分け）"
+    },
+    {
+      "id": "wood_textures",
+      "file": "src/render/textures.ts",
+      "kind": "procedural-texture",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "手続き生成（樹皮4種・割り面・木口）",
+      "replaceWith": "樹種ごとのPBRテクスチャ（色・法線・粗さ）"
+    },
+    {
+      "id": "tinder",
+      "file": "src/render/logGeometry.ts",
+      "kind": "procedural-mesh",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "手続き生成（木毛のリボン150本）",
+      "replaceWith": "火口のモデル"
+    },
+    {
+      "id": "fire_tray",
+      "file": "src/render/environment.ts",
+      "kind": "procedural-mesh",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "手続き生成（無銘の低い金属トレイ）。第2段階で黒鉄・銅・陶器・石を追加（手続き生成。見た目だけ、性能差なし）",
+      "replaceWith": "焚き火台モデル（銅・黒鉄・陶器・石の4種は第2段階）"
+    },
+    {
+      "id": "gravel_ground",
+      "file": "src/render/textures.ts",
+      "kind": "procedural-texture",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "手続き生成。第2段階で砂・雪・木の床・石畳を追加（手続き生成）",
+      "replaceWith": "地面のPBRテクスチャ"
+    },
+    {
+      "id": "lighter_tongs",
+      "file": "src/render/lighter.ts",
+      "kind": "procedural-mesh",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "手続き生成（長いライター・火ばさみ）",
+      "replaceWith": "着火具・火ばさみのモデル（持ち手の動き）"
+    },
+    {
+      "id": "flames_smoke_sparks",
+      "file": "src/render/flames.ts",
+      "kind": "shader",
+      "status": "implemented",
+      "runtimeReady": true,
+      "source": "シェーダーで生成（燃焼区間に結びつく炎の舌・煙・火の粉）"
+    },
+    {
+      "id": "audio_fire",
+      "file": "src/audio/AudioManager.ts",
+      "kind": "synth",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "Web Audioでその場で合成（燃焼音・爆ぜ・薪を置く音・ライター・送風・火ばさみ・崩れ）。第2段階で場所ごとの環境音（波・雨・雪の静けさ・街の遠い音・虫の声・雨だれ）を合成で追加",
+      "replaceWith": "録音素材：30〜60秒の燃焼ループ複数、爆ぜ、薪を置く音3〜5種、着火、送風、変身、記録",
+      "rights": "自作（外部音源なし）"
+    },
+    {
+      "id": "bgm",
+      "file": "src/audio/music.ts",
+      "kind": "synth",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "Web Audioでその場で合成する自作の小さな音楽（場所ごとの調と和音の並び、ゆっくりした和音と小さな単音。熾火で音を減らし、見送りで終わる）。設定のBGMで大きさを変え、0で止める（初期は小さめ）",
+      "replaceWith": "作曲・録音したBGM（任意。初期小音量）",
+      "rights": "自作（外部音源・既存の曲なし）"
+    },
+    {
+      "id": "backdrops_places_provisional",
+      "file": "src/render/places.ts",
+      "kind": "procedural-texture",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "Canvas2Dで描いた手作りの遠景（夜の森・海辺・雨音の東屋・雪の山小屋・屋上テラス）。雨・雪の粒、東屋の屋根、屋上の手すりも手続き生成",
+      "replaceWith": "各場所の横長パノラマ画像（4:1、3072×768以上。docs/画像素材の依頼.md の C）"
+    },
+    {
+      "id": "decor_items",
+      "file": "src/render/FireScene.ts",
+      "kind": "procedural-mesh",
+      "status": "provisional",
+      "runtimeReady": true,
+      "source": "火ばさみの持ち手（木・革）、帆布の薪袋、小さなランタン（手続き生成）",
+      "replaceWith": "GLB（任意）"
+    },
+    {
+      "id": "memory_frames",
+      "file": "src/ui/memoryCard.ts",
+      "kind": "procedural-image",
+      "status": "implemented",
+      "runtimeReady": true,
+      "source": "思い出カードの縁4種（木目・夜空・和紙・熾火。Canvas2Dで描画）"
+    },
+    {
+      "id": "third_party_licenses",
+      "file": "THIRD_PARTY_LICENSES.md",
+      "kind": "document",
+      "status": "final",
+      "runtimeReady": true,
+      "source": "three・react・react-dom・scheduler（MIT）、Noto Sans JP（SIL OFL 1.1）の権利表示とライセンス全文。ゲーム内は「このゲームについて」（src/data/credits.ts）"
+    }
+  ]
+}
